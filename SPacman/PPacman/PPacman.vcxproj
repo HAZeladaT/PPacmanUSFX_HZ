@@ -171,7 +171,7 @@
     <ClCompile Include="Niveles.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="main_basico.cpp" />
-    <ClCompile Include="Extra.cpp" />
+    <ClCompile Include="26_motion.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
