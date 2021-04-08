@@ -1,11 +1,10 @@
 #pragma once
+#include <SDL.h>
 #include "Movimientos.h"
 
 class Fantasma
 {
 private:
-	float posicionX;
-	float posicionY;
 	float velocidad;
 	int color;
 	char forma;
@@ -16,20 +15,17 @@ private:
 	Movimiento direccionActual;
 	Movimiento direccionSiguiente;
 
-	SDL_Point posicionActual;
+	SDL_Point posicion;
 
 public:
 	void move(float velocidad) {};
+	SDL_Point getPosicion() { return posicion; }
+	void setPosicion(SDL_Point _posicion) { posicion = _posicion; }
 
 	Movimiento getDireccionActual() { return direccionActual; }
 	void setDireccionActual(Movimiento _direccionActual) { direccionActual = _direccionActual; }
 	Movimiento getDireccionSiguiente() { return direccionSiguiente; }
 	void setDireccionSiguiente(Movimiento _direccionSiguiente) { direccionSiguiente = _direccionSiguiente; }
-
-	float getPosicionX() { return posicionX; }
-	void setPosicionX(float _posicionX) { posicionX = _posicionX; }
-	float getPosicionY() { return posicionY; }
-	void setPosicionY(float _posicionY) { posicionY = _posicionY; }
 
 	float getVelocidad() { return velocidad; }
 	void setVelocidad(float _velocidad) { velocidad = _velocidad; }
