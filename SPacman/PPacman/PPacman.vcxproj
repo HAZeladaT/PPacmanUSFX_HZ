@@ -139,11 +139,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="ContadorDeMonedas.h" />
+    <ClInclude Include="ContadorDeVidas.h" />
     <ClInclude Include="Fantasma.h" />
+    <ClInclude Include="Frutas.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="GeneradorDeFantasmas.h" />
+    <ClInclude Include="Laberinto.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="Monedas.h" />
+    <ClInclude Include="Movimientos.h" />
+    <ClInclude Include="Muros.h" />
+    <ClInclude Include="Niveles.h" />
     <ClInclude Include="Pacman.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ContadorDeMonedas.cpp" />
+    <ClCompile Include="ContadorDeVidas.cpp" />
     <ClCompile Include="Fantasma.cpp" />
+    <ClCompile Include="Frutas.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="GeneradorDeFantasmas.cpp" />
+    <ClCompile Include="Laberinto.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Monedas.cpp" />
+    <ClCompile Include="Movimientos.cpp" />
+    <ClCompile Include="Muros.cpp" />
+    <ClCompile Include="Niveles.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="main_basico.cpp" />
   </ItemGroup>
