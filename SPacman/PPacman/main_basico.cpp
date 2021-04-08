@@ -1,12 +1,14 @@
 #include <iostream>
 #include <SDL.h>
-#include <stdio.h>
+#include "Pacman.h"
 using namespace std;
 //Constantes de dimensión de pantalla 
 const int SCREEN_WIDTH = 640; 
 const int SCREEN_HEIGHT = 480;
 int main() 
 {
+	Pacman pacmansito;
+	
 	// La ventana que mostraremos a 
 	SDL_Window* window = NULL; 
 	// La superficie contenida por la ventana 
