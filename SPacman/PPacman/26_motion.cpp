@@ -1,6 +1,7 @@
-#include <SDL.h>
-#include <SDL_image.h>
+/*#include <SDL.h>
 #include <stdio.h>
+
+#include <SDL_image.h>
 #include <string>
 
 //Screen dimension constants
@@ -497,4 +498,4 @@ int main(int argc, char* args[])
 	close();
 
 	return 0;
-}
+}*/

@@ -172,6 +172,7 @@
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="main_basico.cpp" />
     <ClCompile Include="26_motion.cpp" />
+    <ClCompile Include="Ventana.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
