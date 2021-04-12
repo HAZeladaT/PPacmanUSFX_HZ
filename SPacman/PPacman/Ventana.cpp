@@ -410,77 +410,6 @@ bool init()
 	return success;
 }
 
-bool loadMedia1()
-{
-	//Loading success flag
-	bool success = true;
-
-	//Load dot texture
-	if (!gDotTexture.loadFromFile("pacmansito.bmp"))
-	{
-		printf("Failed to load dot texture!\n");
-		success = false;
-	}
-	
-	return success;
-}
-bool loadMedia2()
-{
-	//Loading success flag
-	bool success = true;
-
-	//Load dot texture
-	if (!gDotTexture.loadFromFile("Fantasma1.bmp"))
-	{
-		printf("Failed to load dot texture!\n");
-		success = false;
-	}
-
-	return success;
-}
-bool loadMedia3()
-{
-	//Loading success flag
-	bool success = true;
-
-	//Load dot texture
-	if (!gDotTexture.loadFromFile("Fantasma2.bmp"))
-	{
-		printf("Failed to load dot texture!\n");
-		success = false;
-	}
-
-	return success;
-}
-bool loadMedia4()
-{
-	//Loading success flag
-	bool success = true;
-
-	//Load dot texture
-	if (!gDotTexture.loadFromFile("Fantasma3.bmp"))
-	{
-		printf("Failed to load dot texture!\n");
-		success = false;
-	}
-
-	return success;
-}
-bool loadMedia5()
-{
-	//Loading success flag
-	bool success = true;
-
-	//Load dot texture
-	if (!gDotTexture.loadFromFile("Fantasma4.bmp"))
-	{
-		printf("Failed to load dot texture!\n");
-		success = false;
-	}
-
-	return success;
-}
-
 void close()
 {
 	//Free loaded images
@@ -507,7 +436,7 @@ int main(int argc, char* args[])
 	else
 	{
 		//Load media
-		if (!loadMedia1())
+		if (!loadMedia())
 		{
 			printf("Failed to load media!\n");
 		}
@@ -551,67 +480,6 @@ int main(int argc, char* args[])
 				//Update screen
 				SDL_RenderPresent(gRenderer);
 			}
-		}
-		//Load media
-		if (!loadMedia2())
-		{
-			printf("Failed to load media!\n");
-		}
-		else
-		{
-			//Main loop flag
-			bool quit = false;
-			//Event handler
-			SDL_Event e;
-			//The dot that will be moving around on the screen
-			Dot dot;
-			//While application is running
-			while (!quit)
-			{
-				//Handle events on queue
-				while (SDL_PollEvent(&e) != 0)
-					//User requests quit
-					if (e.type == SDL_QUIT)
-					{
-						quit = true;
-					}
-					//Handle input for the dot
-					dot.handleEvent(e);
-				}
-
-				//Move the dot
-				dot.move();
-				//Clear screen
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-				SDL_RenderClear(gRenderer);
-				//Render objects
-				dot.render();
-				//Update screen
-				SDL_RenderPresent(gRenderer);
-		}
-		//Load media
-		if (!loadMedia3())
-		{
-			printf("Failed to load media!\n");
-		}
-		else
-		{
-		}
-		//Load media
-		if (!loadMedia4())
-		{
-			printf("Failed to load media!\n");
-		}
-		else
-		{
-		}
-		//Load media
-		if (!loadMedia5())
-		{
-			printf("Failed to load media!\n");
-		}
-		else
-		{
 		}
 	}
 
