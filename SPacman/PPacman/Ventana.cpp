@@ -5,8 +5,8 @@
 #include <SDL_image.h>
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 1000;
-const int SCREEN_HEIGHT = 640;
+const int SCREEN_WIDTH = 1080;
+const int SCREEN_HEIGHT = 720;
 
 //Texture wrapper class
 class LTexture
@@ -91,8 +91,8 @@ class Dot
 {
 public:
 	//The dimensions of the dot
-	static const int DOT_WIDTH = 20;
-	static const int DOT_HEIGHT = 20;
+	static const int DOT_WIDTH = 10;
+	static const int DOT_HEIGHT = 10;
 
 	//Maximum axis velocity of the dot
 	static const int DOT_VEL = 10;
@@ -115,6 +115,7 @@ private:
 
 	//The velocity of the dot
 	int mVelX, mVelY;
+
 };
 
 //Starts up SDL and creates window
@@ -375,7 +376,7 @@ bool init()
 		}
 
 		//Create window
-		gWindow = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
+		gWindow = SDL_CreateWindow("Pacman USFX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
 		if (gWindow == NULL)
 		{
 			printf("Window could not be created! SDL Error: %s\n", SDL_GetError());
@@ -409,7 +410,7 @@ bool init()
 	return success;
 }
 
-bool loadMedia()
+bool loadMedia1()
 {
 	//Loading success flag
 	bool success = true;
@@ -421,6 +422,62 @@ bool loadMedia()
 		success = false;
 	}
 	
+	return success;
+}
+bool loadMedia2()
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load dot texture
+	if (!gDotTexture.loadFromFile("Fantasma1.bmp"))
+	{
+		printf("Failed to load dot texture!\n");
+		success = false;
+	}
+
+	return success;
+}
+bool loadMedia3()
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load dot texture
+	if (!gDotTexture.loadFromFile("Fantasma2.bmp"))
+	{
+		printf("Failed to load dot texture!\n");
+		success = false;
+	}
+
+	return success;
+}
+bool loadMedia4()
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load dot texture
+	if (!gDotTexture.loadFromFile("Fantasma3.bmp"))
+	{
+		printf("Failed to load dot texture!\n");
+		success = false;
+	}
+
+	return success;
+}
+bool loadMedia5()
+{
+	//Loading success flag
+	bool success = true;
+
+	//Load dot texture
+	if (!gDotTexture.loadFromFile("Fantasma4.bmp"))
+	{
+		printf("Failed to load dot texture!\n");
+		success = false;
+	}
+
 	return success;
 }
 
@@ -450,7 +507,7 @@ int main(int argc, char* args[])
 	else
 	{
 		//Load media
-		if (!loadMedia())
+		if (!loadMedia1())
 		{
 			printf("Failed to load media!\n");
 		}
@@ -494,6 +551,67 @@ int main(int argc, char* args[])
 				//Update screen
 				SDL_RenderPresent(gRenderer);
 			}
+		}
+		//Load media
+		if (!loadMedia2())
+		{
+			printf("Failed to load media!\n");
+		}
+		else
+		{
+			//Main loop flag
+			bool quit = false;
+			//Event handler
+			SDL_Event e;
+			//The dot that will be moving around on the screen
+			Dot dot;
+			//While application is running
+			while (!quit)
+			{
+				//Handle events on queue
+				while (SDL_PollEvent(&e) != 0)
+					//User requests quit
+					if (e.type == SDL_QUIT)
+					{
+						quit = true;
+					}
+					//Handle input for the dot
+					dot.handleEvent(e);
+				}
+
+				//Move the dot
+				dot.move();
+				//Clear screen
+				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				SDL_RenderClear(gRenderer);
+				//Render objects
+				dot.render();
+				//Update screen
+				SDL_RenderPresent(gRenderer);
+		}
+		//Load media
+		if (!loadMedia3())
+		{
+			printf("Failed to load media!\n");
+		}
+		else
+		{
+		}
+		//Load media
+		if (!loadMedia4())
+		{
+			printf("Failed to load media!\n");
+		}
+		else
+		{
+		}
+		//Load media
+		if (!loadMedia5())
+		{
+			printf("Failed to load media!\n");
+		}
+		else
+		{
 		}
 	}
 
