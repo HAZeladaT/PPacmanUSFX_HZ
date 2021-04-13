@@ -1,24 +1,33 @@
 #pragma once
 #include <SDL.h>
-#include "Movimientos.h"
 
-class Fantasma
-{
+class Fantasma {
 private:
-	float velocidad;
-	float velocidadPatron;
-	float posicionX;
-	float posicionY;
-	int color;
-	char forma;
-	int alto;
+	//Posicion actual del fantasma en la pantalla
+	int posicionX;
+	int posicionY;
+
+	//Velocidad en eje X
+	int velocidadX;
+
+	//Velocidad en el eje Y
+	int velocidadY;
+
+	//Velocidad a la que mueve el fantasma en cualquier eje
+	int velocidadPatron;
+
 	int ancho;
-	char accesorio;
-	char estado;
+	int alto;
+
 	int anchoPantalla;
 	int altoPantalla;
 
-public:
+	int posicionXDestino;
+	int posicionYDestino;
+
+	int incrementoPosicionX;
+	int incrementoPosicionY;
+
 	// Ventana en la que se realizara el tratamiento grafico de renderizacion
 	SDL_Window* window = nullptr;
 
@@ -28,47 +37,48 @@ public:
 	// La superficie grafica (surface) que contiene la ventana
 	SDL_Surface* screenSurface = nullptr;
 
-	// Supeerficie grafica del fantasma;
-	SDL_Surface* fantasmaSurface = nullptr;
+
+	// Textura de la grafica del fantasma
+	SDL_Texture* fantasmaTexture[3];
+
 public:
-	// Constructores y destructores
+	//Constructores y destructores
 	Fantasma();
-	// ~ Fantasma ();
+	Fantasma(int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla, int _velocidadPatron);
+	Fantasma(SDL_Window* _window, SDL_Renderer* _renderer, SDL_Surface* _screenSurface, SDL_Texture* _fantasmaTexture[3], int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla, int _velocidadPatron);
+	//~Fantasma();
 
-	// Metodos accesores
+	//Metodos accesores
 
-	float getPosicionX() { return posicionX; }
-	void setPosicionX(float _posicionX) { posicionX = _posicionX; }
-
-	float getPosicionY() { return posicionY; }
-	void setPosicionY(float _posicionY) { posicionY = _posicionY; }
-
-	float getVelocidad() { return velocidad; }
-	void setVelocidad(float _velocidad) { velocidad = _velocidad; }
-
-	float getVelocidadPatron() { return velocidadPatron; }
-	void setVelocidadPatron(float _velocidadPatron) { velocidadPatron = _velocidadPatron; }
-
+	int getPosicionX() { return posicionX; }
+	int getPosicionY() { return posicionY; }
+	int getVelocidadX() { return velocidadX; }
+	int getVelocidadY() { return velocidadY; }
+	int getVelocidadPatron() { return velocidadPatron; }
 	int getAncho() { return ancho; }
-	void setAncho(float _ancho) { ancho = _ancho; }
-
 	int getAlto() { return alto; }
-	void setAlto(float _alto) { alto = _alto; }
-
 	int getAnchoPantalla() { return anchoPantalla; }
-	void setAnchoPantalla(float _anchoPantalla) { anchoPantalla = _anchoPantalla; }
-
 	int getAltoPantalla() { return altoPantalla; }
-	void setAltoPantalla(float _altoPantalla) { altoPantalla = _altoPantalla; }
+
+	void setPosicionX(int _posicionX) { posicionX = _posicionX; }
+	void setPosicionY(int _posicionY) { posicionY = _posicionY; }
+	void setVelocidadX(int _velocidadX) { velocidadX = _velocidadX; }
+	void setVelocidadY(int _velocidadY) { velocidadY = _velocidadY; }
+	void setVelocidadPatron(int _velocidadPatron) { velocidadPatron = _velocidadPatron; }
+	void setAncho(int _ancho) { ancho = _ancho; }
+	void setAlto(int _alto) { alto = _alto; }
+	void setAnchoPantalla(int _anchoPantalla) { anchoPantalla = _anchoPantalla; }
+	void setAltoPantalla(int _altoPantalla) { altoPantalla = _altoPantalla; }
+
 
 	// Metodos varios
 
 	// Manejador de eventos del fantasma
-	// anular handleEvent (SDL_Event & e);
+	//void handleEvent(SDL_Event& e);
 
 	// Mover fantasma
 	void move();
 	// Renderizar imagen fantasma
-	void  render();
-};
+	void render();
 
+};

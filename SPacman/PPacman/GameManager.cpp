@@ -6,27 +6,27 @@ GameManager::GameManager() {
 	gWindow = nullptr;
 	gRenderer = nullptr;
 	gScreenSurface = nullptr;
-	gPacManSurface = nullptr;
-	gFantasmaSurface = nullptr;
+	//gPacManSurface = nullptr;
+	gPacmanTexture = nullptr;
 
 	juego_en_ejecucion = true;
-	pacman = new Pacman();
+	//pacman = new Pacman(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
+
+	fruta = new Fruta();
 }
 
 int GameManager::onExecute() {
 	if (onInit() == false) {
 		return -1;
 	}
-
-	pacman->window = gWindow;
-	pacman->renderer = gRenderer;
-	pacman->screenSurface = gScreenSurface;
-	pacman->pacmanSurface = gPacManSurface;
-
-	fantasma.window = gWindow;
-	fantasma.renderer = gRenderer;
-	fantasma.screenSurface = gScreenSurface;
-	fantasma.fantasmaSurface = gFantasmaSurface;
+	//pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacManSurface);
+	//pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacManSurface, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
+	pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacmanTexture, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
+	//fantasma = new Fantasma();
+	//fantasma = new Fantasma(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH, SCREEN_HEIGHT, 7);
+	fantasma = new Fantasma(gWindow, gRenderer, gScreenSurface, gFantasmaTexture, rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
+	fruta = new Fruta(gWindow, gRenderer, gScreenSurface, gFrutasTextures, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT);
+	srand(time(NULL));
 
 	SDL_Event Event;
 
@@ -39,8 +39,9 @@ int GameManager::onExecute() {
 		pacman->move();
 
 		// Mover Fantasma
-		fantasma.move();
+		fantasma->move();
 
+		fruta->mostrar();
 		//Clear screen
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(gRenderer);
@@ -96,18 +97,46 @@ bool GameManager::onInit() {
 			//Get window surface
 			gScreenSurface = SDL_GetWindowSurface(gWindow);
 
-			/*if ((gPacManSurface = loadMediaToSurface("Resources/PacMan_01.bmp")) == NULL) {
-				return false;
-			}*/
-
-			if ((gPacManSurface = SDL_LoadBMP("Resources/PacMan_01.bmp")) == NULL) {
+			gPacmanTexture = loadTexture("pacmansito.bmp");
+			if (gPacmanTexture == NULL)
+			{
+				cout << "Fallo en la carga de la textura" << endl;
+				success = false;
+			}
+			//Fantasmas
+			if ((gFantasmaTexture[0] = loadTexture("Fantasma1.bmp")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
 				return false;
 			}
-
-			if ((gFantasmaSurface = SDL_LoadBMP("Resources/Fantasma.bmp")) == NULL) {
+			if ((gFantasmaTexture[1] = loadTexture("Fantasma2.bmp")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
 				return false;
 			}
-
+			if ((gFantasmaTexture[2] = loadTexture("Fantasma3.bmp")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
+				return false;
+			}
+			if ((gFantasmaTexture[3] = loadTexture("Fantasma4.bmp")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
+				return false;
+			}
+			//Frutitas
+			if ((gFrutasTextures[0] = loadTexture("Fruta1.png")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
+				return false;
+			}
+			if ((gFrutasTextures[1] = loadTexture("Fruta2.png")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
+				return false;
+			}
+			if ((gFrutasTextures[2] = loadTexture("Fruta3.png")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
+				return false;
+			}
+			if ((gFrutasTextures[3] = loadTexture("Fruta4.png")) == NULL) {
+				cout << "Fallo en la carga de la textura aqui" << endl;
+				return false;
+			}
 		}
 	}
 
@@ -122,11 +151,40 @@ void GameManager::onEvent(SDL_Event* Event) {
 void GameManager::onLoop() {};
 void GameManager::onRender() {
 	pacman->render();
-	fantasma.render();
+	fantasma->render();
+	fruta->render();
 };
 
 void GameManager::onCleanup() {
 	SDL_FreeSurface(gScreenSurface);
-	SDL_FreeSurface(gPacManSurface);
+
 	SDL_Quit();
 };
+
+
+SDL_Texture* GameManager::loadTexture(string path)
+{
+	// Textura final generada
+	SDL_Texture* newTexture = nullptr;
+
+	// Carga una imagen de una ruta especifica
+	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+	if (loadedSurface == NULL)
+	{
+		cout << "No se pudo cargarla imagen, SDL_image Error: " << IMG_GetError() << endl;
+	}
+	else
+	{
+		// Crea una textura a partir de una superficie de pixeles
+		newTexture = SDL_CreateTextureFromSurface(gRenderer, loadedSurface);
+		if (newTexture == NULL)
+		{
+			cout << "No se pudo crear la textura, SDL Error: " << SDL_GetError() << endl;
+		}
+
+		// Libera la superficie cargada
+		SDL_FreeSurface(loadedSurface);
+	}
+
+	return newTexture;
+}
