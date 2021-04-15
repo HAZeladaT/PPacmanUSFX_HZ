@@ -6,27 +6,26 @@ GameManager::GameManager() {
 	gWindow = nullptr;
 	gRenderer = nullptr;
 	gScreenSurface = nullptr;
-	//gPacManSurface = nullptr;
 	gPacmanTexture = nullptr;
-
 	juego_en_ejecucion = true;
-	//pacman = new Pacman(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
 
-	fruta = new Fruta();
+	for (int i = 0; i <= 3; i++) {
+		frutas[i] = new Fruta();
+	}
 }
-
+	
 int GameManager::onExecute() {
+	srand(time(NULL));
 	if (onInit() == false) {
 		return -1;
 	}
-	//pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacManSurface);
-	//pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacManSurface, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
-	pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacmanTexture, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
-	//fantasma = new Fantasma();
-	//fantasma = new Fantasma(SCREEN_WIDTH / 4, SCREEN_HEIGHT / 4, SCREEN_WIDTH, SCREEN_HEIGHT, 7);
-	fantasma = new Fantasma(gWindow, gRenderer, gScreenSurface, gFantasmaTexture, rand()%SCREEN_WIDTH, rand()%SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
-	fruta = new Fruta(gWindow, gRenderer, gScreenSurface, gFrutasTextures, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT);
-	srand(time(NULL));
+	pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacmanTexture, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 2);
+	for (int i = 0; i <= 3; i++) {
+		fantasmas[i] = new Fantasma(gWindow, gRenderer, gScreenSurface, gFantasmaTexture, rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, 1,i);
+	}
+	for (int i = 0; i <= 3; i++) {
+		frutas[i] = new Fruta(gWindow, gRenderer, gScreenSurface, gFrutasTextures, rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+	}
 
 	SDL_Event Event;
 
@@ -39,9 +38,12 @@ int GameManager::onExecute() {
 		pacman->move();
 
 		// Mover Fantasma
-		fantasma->move();
-
-		fruta->mostrar();
+		for (int i = 0; i <= 3; i++) {
+			fantasmas[i]->move();
+		}
+		for (int i = 0; i <= 3; i++) {
+			frutas[i]->mostrar();
+		}
 		//Clear screen
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_RenderClear(gRenderer);
@@ -151,8 +153,12 @@ void GameManager::onEvent(SDL_Event* Event) {
 void GameManager::onLoop() {};
 void GameManager::onRender() {
 	pacman->render();
-	fantasma->render();
-	fruta->render();
+	for (int i = 0; i <= 3; i++) {
+		fantasmas[i]->render();
+	}
+	for (int i = 0; i <= 3; i++) {
+		frutas[i]->render();
+	}
 };
 
 void GameManager::onCleanup() {

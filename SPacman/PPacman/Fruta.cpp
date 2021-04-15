@@ -1,9 +1,9 @@
 #include "Fruta.h"
 #include <iostream>
-#include <time.h>
+#include <cstdlib>
+#include <ctime>
 
 using namespace std;
-
 Fruta::Fruta() {
 	posicionX = 50;
 	posicionY = 50;
@@ -11,8 +11,8 @@ Fruta::Fruta() {
 	alto = 20;
 	anchoPantalla = 640;
 	altoPantalla = 480;
-
-	tipoFruta = TIPO_FRUTA_GUINDA;
+	srand((unsigned int)time(NULL));
+	tipoTextura = rand()%4;
 
 	visible = false;
 
@@ -22,7 +22,7 @@ Fruta::Fruta() {
 	contadorTiempoNoVisible = 0;
 }
 
-Fruta::Fruta(SDL_Window* _window, SDL_Renderer* _renderer, SDL_Surface* _screenSurface, SDL_Texture* _frutasTextures[3], int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla)
+Fruta::Fruta(SDL_Window* _window, SDL_Renderer* _renderer, SDL_Surface* _screenSurface, SDL_Texture* _frutasTextures[4], int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla)
 {
 	// Inicializa propiedade de de pacman
 	posicionX = _posicionX;
@@ -31,7 +31,8 @@ Fruta::Fruta(SDL_Window* _window, SDL_Renderer* _renderer, SDL_Surface* _screenS
 	alto = 25;
 	anchoPantalla = _anchoPantalla;
 	altoPantalla = _altoPantalla;
-	tipoFruta = TIPO_FRUTA_GUINDA;
+	srand((unsigned int)time(NULL));
+	tipoTextura = rand() % 4;
 
 	visible = false;
 
@@ -55,15 +56,14 @@ void Fruta::mostrar()
 	if (contadorTiempoVisible >= tiempoVisible) {
 		visible = false;
 		if (contadorTiempoNoVisible >= tiempoNoVisible) {
-			posicionX = 1 + rand() % anchoPantalla;
-			posicionY = 1 + rand() % altoPantalla;
+			posicionX = 1 + rand() % (anchoPantalla-ancho);
+			posicionY = 1 + rand() % (altoPantalla-alto);
 			contadorTiempoVisible = 0;
 			contadorTiempoNoVisible = 0;
 			visible = true;
 		}
 		else {
 			contadorTiempoNoVisible++;
-			//contadorTiempoNoVisible = contadorTiempoNoVisible + 1;
 		}
 	}
 	else {
@@ -77,7 +77,6 @@ void Fruta::render()
 
 		SDL_Rect renderQuad = { posicionX, posicionY, ancho, alto };
 		//Render to screen
-		srand(time(0));
-			SDL_RenderCopyEx(renderer, frutasTextures[rand()%4], nullptr, &renderQuad, 0.0, nullptr, SDL_FLIP_NONE);
+		SDL_RenderCopyEx(renderer, frutasTextures[tipoTextura], nullptr, &renderQuad, 0.0, nullptr, SDL_FLIP_NONE);
 	}
 }

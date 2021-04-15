@@ -27,7 +27,7 @@ private:
 
 	int incrementoPosicionX;
 	int incrementoPosicionY;
-
+	int tipoTextura;
 	// Ventana en la que se realizara el tratamiento grafico de renderizacion
 	SDL_Window* window = nullptr;
 
@@ -39,13 +39,13 @@ private:
 
 
 	// Textura de la grafica del fantasma
-	SDL_Texture* fantasmaTexture[3];
+	SDL_Texture* fantasmaTexture[4];
 
 public:
 	//Constructores y destructores
 	Fantasma();
-	Fantasma(int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla, int _velocidadPatron);
-	Fantasma(SDL_Window* _window, SDL_Renderer* _renderer, SDL_Surface* _screenSurface, SDL_Texture* _fantasmaTexture[3], int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla, int _velocidadPatron);
+	Fantasma(int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla, int _velocidadPatron, int _tipoTextura);
+	Fantasma(SDL_Window* _window, SDL_Renderer* _renderer, SDL_Surface* _screenSurface, SDL_Texture* _fantasmaTexture[4], int _posicionX, int _posicionY, int _anchoPantalla, int _altoPantalla, int _velocidadPatron, int _tipoTextura);
 	//~Fantasma();
 
 	//Metodos accesores
@@ -69,13 +69,6 @@ public:
 	void setAlto(int _alto) { alto = _alto; }
 	void setAnchoPantalla(int _anchoPantalla) { anchoPantalla = _anchoPantalla; }
 	void setAltoPantalla(int _altoPantalla) { altoPantalla = _altoPantalla; }
-
-
-	// Metodos varios
-
-	// Manejador de eventos del fantasma
-	//void handleEvent(SDL_Event& e);
-
 	// Mover fantasma
 	void move();
 	// Renderizar imagen fantasma

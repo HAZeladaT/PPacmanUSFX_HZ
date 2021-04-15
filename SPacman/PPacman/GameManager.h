@@ -34,14 +34,13 @@ private:
 
     //The images we will load and show on the screen
     SDL_Texture* gPacmanTexture;
-    SDL_Texture* gFantasmaTexture[3];
-    SDL_Texture* gFrutasTextures[3];
+    SDL_Texture* gFantasmaTexture[4];
+    SDL_Texture* gFrutasTextures[4];
     
 public:
     Pacman* pacman;
-    Fantasma* fantasma;
-    Fruta* fruta;
-
+    Fantasma* fantasmas[4];
+    Fruta* frutas[4];
 public:
     GameManager();
     int onExecute();
