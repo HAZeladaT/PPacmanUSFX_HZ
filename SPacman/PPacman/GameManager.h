@@ -4,19 +4,21 @@
 #include <stdlib.h>
 #include <time.h>
 
+#include <vector>
 #include <SDL.h>
 #include <SDL_image.h>
 
 #include "Pacman.h"
 #include "Fantasma.h"
 #include "Fruta.h"
-
+#include "Moneda.h"
+#include "Texture.h"
 using namespace std;
 
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+const int SCREEN_WIDTH = 800;
+const int SCREEN_HEIGHT = 600;
 
 class GameManager
 {
@@ -34,13 +36,21 @@ private:
 
     //The images we will load and show on the screen
     SDL_Texture* gPacmanTexture;
-    SDL_Texture* gFantasmaTexture[4];
-    SDL_Texture* gFrutasTextures[4];
-    
+    vector<SDL_Texture*> gFrutasTextures;
+    SDL_Texture* gMonedaTexture;
+    SDL_Texture* gSuperMonedaTexture;
+
+    Texture* pacmanTextura;
+    Texture* fantasma1Texture = nullptr;
+    Texture* fantasma2Texture = nullptr;
 public:
     Pacman* pacman;
-    Fantasma* fantasmas[4];
-    Fruta* frutas[4];
+    Fantasma* fantasmas;
+    Fantasma* fantasmas1;
+    Fruta* fruta;
+    vector<Moneda*> monedas;
+    vector<Moneda*> superMonedas;
+    vector<GameObject*> actoresJuego;
 public:
     GameManager();
     int onExecute();

@@ -7,11 +7,9 @@ GameManager::GameManager() {
 	gRenderer = nullptr;
 	gScreenSurface = nullptr;
 	gPacmanTexture = nullptr;
+	gMonedaTexture = nullptr;
+	pacmanTextura = nullptr;
 	juego_en_ejecucion = true;
-
-	for (int i = 0; i <= 3; i++) {
-		frutas[i] = new Fruta();
-	}
 }
 	
 int GameManager::onExecute() {
@@ -19,13 +17,33 @@ int GameManager::onExecute() {
 	if (onInit() == false) {
 		return -1;
 	}
-	pacman = new Pacman(gWindow, gRenderer, gScreenSurface, gPacmanTexture, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, SCREEN_WIDTH, SCREEN_HEIGHT, 2);
-	for (int i = 0; i <= 3; i++) {
-		fantasmas[i] = new Fantasma(gWindow, gRenderer, gScreenSurface, gFantasmaTexture, rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT, 1,i);
+	pacman = new Pacman(pacmanTextura, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT, 5);
+	cout << pacman->getIdObjeto() << endl;
+	actoresJuego.push_back(new Fantasma(fantasma1Texture, 0, 0, 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT, 5));
+	actoresJuego.push_back(new Fantasma(fantasma2Texture, SCREEN_WIDTH / 3, SCREEN_HEIGHT / 3, 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT, 5));
+	actoresJuego.push_back(new Fantasma("Clyde.bmp", 220, 220, 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT, 5));
+
+	actoresJuego.push_back(new Fruta(gRenderer, gFrutasTextures, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2, 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT));
+
+	int posx = 0;
+	for (int i = 0; i < 10; i++)
+	{
+		posx = i * 50;
+		//monedas.push_back(new Moneda(gRenderer, gMonedaTexture, posx, 100, 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT));
+		actoresJuego.push_back(new Moneda(gRenderer, gMonedaTexture, posx, 100, 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT));
 	}
-	for (int i = 0; i <= 3; i++) {
-		frutas[i] = new Fruta(gWindow, gRenderer, gScreenSurface, gFrutasTextures, rand() % SCREEN_WIDTH, rand() % SCREEN_HEIGHT, SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	for (int i = 0; i < 4; i++)
+	{
+		actoresJuego.push_back(new Moneda(gRenderer, gSuperMonedaTexture, 50 + (i * 50), 50 + (i * 50), 25, 25, SCREEN_WIDTH, SCREEN_HEIGHT));
 	}
+
+	for (int i = 0; i < actoresJuego.size(); i++) {
+		cout << actoresJuego[i]->getIdObjeto() << endl;
+	}
+
+	srand(time(NULL));
+
 
 	SDL_Event Event;
 
@@ -37,12 +55,9 @@ int GameManager::onExecute() {
 		// Mover Pacman
 		pacman->move();
 
-		// Mover Fantasma
-		for (int i = 0; i <= 3; i++) {
-			fantasmas[i]->move();
-		}
-		for (int i = 0; i <= 3; i++) {
-			frutas[i]->mostrar();
+		for (int i = 0; i < actoresJuego.size(); i++) {
+			actoresJuego[i]->move();
+			actoresJuego[i]->mostrar();
 		}
 		//Clear screen
 		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
@@ -105,39 +120,35 @@ bool GameManager::onInit() {
 				cout << "Fallo en la carga de la textura" << endl;
 				success = false;
 			}
+			Texture::renderer = gRenderer;
 			//Fantasmas
-			if ((gFantasmaTexture[0] = loadTexture("Fantasma1.bmp")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
-			}
-			if ((gFantasmaTexture[1] = loadTexture("Fantasma2.bmp")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
-			}
-			if ((gFantasmaTexture[2] = loadTexture("Fantasma3.bmp")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
-			}
-			if ((gFantasmaTexture[3] = loadTexture("Fantasma4.bmp")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
-			}
+			pacmanTextura = new Texture();
+			pacmanTextura->loadFromImage("pacmansito.bmp");
+
+			fantasma1Texture = new Texture();
+			fantasma1Texture->loadFromImage("Fantasma1.bmp");
+			fantasma2Texture = new Texture();
+			fantasma2Texture->loadFromImage("Fantasma2.bmp");
+
 			//Frutitas
-			if ((gFrutasTextures[0] = loadTexture("Fruta1.png")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
+			gFrutasTextures.push_back(loadTexture("Fruta1.png"));
+			gFrutasTextures.push_back(loadTexture("Fruta2.png"));
+			gFrutasTextures.push_back(loadTexture("Fruta3.png"));
+			gFrutasTextures.push_back(loadTexture("Fruta4.png"));
+
+			//Monedas
+			gMonedaTexture = loadTexture("monedas.bmp");
+			if (gMonedaTexture == NULL)
+			{
+				cout << "Fallo en la carga de la textura" << endl;
+				success = false;
 			}
-			if ((gFrutasTextures[1] = loadTexture("Fruta2.png")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
-			}
-			if ((gFrutasTextures[2] = loadTexture("Fruta3.png")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
-			}
-			if ((gFrutasTextures[3] = loadTexture("Fruta4.png")) == NULL) {
-				cout << "Fallo en la carga de la textura aqui" << endl;
-				return false;
+
+			gSuperMonedaTexture = loadTexture("supermoneda.bmp");
+			if (gSuperMonedaTexture == NULL)
+			{
+				cout << "Fallo en la carga de la textura" << endl;
+				success = false;
 			}
 		}
 	}
@@ -152,12 +163,13 @@ void GameManager::onEvent(SDL_Event* Event) {
 };
 void GameManager::onLoop() {};
 void GameManager::onRender() {
+	pacman->update();
 	pacman->render();
-	for (int i = 0; i <= 3; i++) {
-		fantasmas[i]->render();
+	for (int i = 0; i < actoresJuego.size(); i++) {
+		actoresJuego[i]->update();
 	}
-	for (int i = 0; i <= 3; i++) {
-		frutas[i]->render();
+	for (int i = 0; i < actoresJuego.size(); i++) {
+		actoresJuego[i]->render();
 	}
 };
 
