@@ -17,7 +17,8 @@ private:
 
 	int posicionXDestino;
 	int posicionYDestino;
-
+	int incrementoX;
+	int incrementoY;
 	Texture* fantasmaTexture = nullptr;
 	int numeroFrame;
 	int contadorFrames;
@@ -37,6 +38,15 @@ public:
 	void setVelocidadX(int _velocidadX) { velocidadX = _velocidadX; }
 	void setVelocidadY(int _velocidadY) { velocidadY = _velocidadY; }
 	void setVelocidadPatron(int _velocidadPatron) { velocidadPatron = _velocidadPatron; }
+
+	int getIncrementoX() { return incrementoX; }
+	void setIncrementoX(int _incrementoX) { incrementoX = _incrementoX	}
+	int getIncrementoY() { return incrementoY; }
+	void setIncrementoY(int _incrementoY) { 
+		if (_incrementoY < getAltoPantalla() && _incrementoY>0) {
+			incrementoY = _incrementoY;
+		}
+	}
 	// Mover fantasma
 	void move();
 	// Renderizar imagen fantasma
