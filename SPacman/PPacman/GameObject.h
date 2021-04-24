@@ -46,7 +46,11 @@ public:
 			posicionX = _posicionX;
 		}
 	}
-	void setPosicionY(int _posicionY) { posicionY = _posicionY; }
+	void setPosicionY(int _posicionY) { 
+		if (_posicionY < getAnchoPantalla() && _posicionY>0) {
+			posicionY = _posicionY;
+		}
+	}
 	void setAncho(int _ancho) { ancho = _ancho; }
 	void setAlto(int _alto) { alto = _alto; }
 	void setAnchoPantalla(int _anchoPantalla) { anchoPantalla = _anchoPantalla; }

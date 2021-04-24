@@ -41,7 +41,11 @@ public:
 	void setVelocidadPatron(int _velocidadPatron) { velocidadPatron = _velocidadPatron; }
 
 	int getIncrementoX() { return incrementoX; }
-	void setIncrementoX(int _incrementoX) { incrementoX = _incrementoX	}
+	void setIncrementoX(int _incrementoX) { 
+		if (_incrementoX < getAnchoPantalla() && _incrementoX>0) {
+			incrementoX = _incrementoX;
+		}
+	}
 	int getIncrementoY() { return incrementoY; }
 	void setIncrementoY(int _incrementoY) { 
 		if (_incrementoY < getAltoPantalla() && _incrementoY>0) {
