@@ -28,11 +28,12 @@ Fantasma::Fantasma(Texture* _fantasmaTexture, int _posicionX, int _posicionY, in
 	numeroFrame = 0;
 	contadorFrames = 0;
 	fantasmaTexture = _fantasmaTexture;
+}
 
 void Fantasma::move()
 {
-	getPosicionX() += velocidadPatron * velocidadX;
-	getPosicionY() += velocidadPatron * velocidadY;
+	setPosicionX(getPosicionX() + velocidadPatron * velocidadX);
+	setPosicionY(getPosicionY() + velocidadPatron * velocidadY);
 	if (velocidadX == 1) {
 		if (getPosicionX() >= posicionXDestino) {
 			velocidadX = 0;
