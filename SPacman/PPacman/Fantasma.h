@@ -4,6 +4,7 @@
 #include <string>
 #include "GameObject.h"
 #include "Texture.h"
+
 using namespace std;
 class Fantasma : public GameObject {
 private:
