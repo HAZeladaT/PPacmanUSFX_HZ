@@ -54,7 +54,6 @@ public:
 	void setVisible(bool _visible) { visible = _visible; }
 
 	// Metodos varios
-
 	// Renderizar imagen
 	virtual void render();
 	virtual void move() {};
