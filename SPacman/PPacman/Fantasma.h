@@ -23,7 +23,7 @@ private:
 	Texture* fantasmaTexture = nullptr;
 	int numeroFrame;
 	int contadorFrames;
-	const int framesMovimiento = 4;
+	const int framesMovimiento = 1;
 	
 public:
 	//Constructores y destructores
@@ -48,7 +48,7 @@ public:
 	}
 	int getIncrementoY() { return incrementoY; }
 	void setIncrementoY(int _incrementoY) { 
-		if (_incrementoY < getAltoPantalla() && _incrementoY>0) {
+		if (_incrementoY < getAnchoPantalla() && _incrementoY>0) {
 			incrementoY = _incrementoY;
 		}
 	}

@@ -36,7 +36,9 @@ Fantasma::Fantasma(Texture* _fantasmaTexture, int _posicionX, int _posicionY, in
 void Fantasma::move()
 {
 	incrementoX += velocidadPatron * velocidadX;
+	setPosicionX(incrementoX);
 	incrementoY += velocidadPatron * velocidadY;
+	setPosicionY(incrementoY);
 	if (velocidadX == 1) {
 		if (incrementoX >= posicionXDestino) {
 			velocidadX = 0;
@@ -59,7 +61,7 @@ void Fantasma::move()
 			}
 		}
 	}
-	
+	srand(time(NULL));
 	if (velocidadY == 1) {
 		if (incrementoY >= posicionYDestino) {
 			velocidadY = 0;
@@ -93,10 +95,6 @@ void Fantasma::move()
 	if ((incrementoY < 0) || (incrementoY + getAlto()) >= getAltoPantalla()) {
 		velocidadY *= -1;
 	}
-	cout << incrementoX << endl;
-	cout << incrementoY << endl;
-	setPosicionX(incrementoX);
-	setPosicionY(incrementoY);
 }
 
 void Fantasma::render()

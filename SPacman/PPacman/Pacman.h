@@ -21,7 +21,7 @@ private:
 
 	int numeroFrame;
 	int contadorFrames;
-	const int framesMovimiento = 2;
+	const int framesMovimiento = 1;
 	int posicionXEnTextura;
 	int posicionYEnTextura;
 
