@@ -104,6 +104,7 @@ void Fantasma::render()
 	//Render to screen
 	fantasmaTexture->render(getPosicionX(), getPosicionY(), &renderQuad);
 }
+
 void Fantasma::update() {
 	contadorFrames++;
 	numeroFrame = contadorFrames / 8;
