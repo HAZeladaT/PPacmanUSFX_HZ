@@ -40,7 +40,7 @@ void Fantasma::move()
 	incrementoY += velocidadPatron * velocidadY;
 	setPosicionY(incrementoY);
 	if (velocidadX == 1) {
-		if (incrementoX >= posicionXDestino) {
+		if (incrementoX + ancho >= posicionXDestino) {
 			velocidadX = 0;
 			if (incrementoY >= posicionYDestino) {
 				velocidadY = -1;
@@ -62,7 +62,7 @@ void Fantasma::move()
 		}
 	}
 	if (velocidadY == 1) {
-		if (incrementoY >= posicionYDestino) {
+		if (incrementoY + alto >= posicionYDestino) {
 			velocidadY = 0;
 			posicionXDestino = 1 + rand() % (getAnchoPantalla() - getAncho());
 			posicionYDestino = 1 + rand() % (getAltoPantalla() - getAlto());
