@@ -61,7 +61,6 @@ void Fantasma::move()
 			}
 		}
 	}
-	srand(time(NULL));
 	if (velocidadY == 1) {
 		if (incrementoY >= posicionYDestino) {
 			velocidadY = 0;

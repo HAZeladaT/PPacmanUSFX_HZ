@@ -41,16 +41,8 @@ public:
 	int getAltoPantalla() { return altoPantalla; }
 	bool getVisible() { return visible; }
 
-	void setPosicionX(int _posicionX) { 
-		if (_posicionX < getAnchoPantalla() && _posicionX>0) {
-			posicionX = _posicionX;
-		}
-	}
-	void setPosicionY(int _posicionY) { 
-		if (_posicionY < getAnchoPantalla() && _posicionY>0) {
-			posicionY = _posicionY;
-		}
-	}
+	void setPosicionX(int _posicionX) { posicionX = _posicionX; }
+	void setPosicionY(int _posicionY) { posicionY = _posicionY; }
 	void setAncho(int _ancho) { ancho = _ancho; }
 	void setAlto(int _alto) { alto = _alto; }
 	void setAnchoPantalla(int _anchoPantalla) { anchoPantalla = _anchoPantalla; }
