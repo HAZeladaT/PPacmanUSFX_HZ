@@ -12,5 +12,4 @@ GameObject::GameObject(int _posicionX, int _posicionY, int _ancho, int _alto, in
 	numeroObjetosCreados++;
 	idObjeto = numeroObjetosCreados;
 }
-
 void GameObject::render() {};
