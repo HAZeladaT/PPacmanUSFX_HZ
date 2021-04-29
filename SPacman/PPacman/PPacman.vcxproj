@@ -146,9 +146,12 @@
     <ClInclude Include="Fruta.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="MapGenerator.h" />
     <ClInclude Include="Moneda.h" />
     <ClInclude Include="Movimientos.h" />
     <ClInclude Include="Pacman.h" />
+    <ClInclude Include="Pared.h" />
+    <ClInclude Include="Pila.h" />
     <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
@@ -156,10 +159,13 @@
     <ClCompile Include="Fruta.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="MapGenerator.cpp" />
     <ClCompile Include="Moneda.cpp" />
     <ClCompile Include="Movimientos.cpp" />
     <ClCompile Include="Pacman.cpp" />
     <ClCompile Include="main_basico.cpp" />
+    <ClCompile Include="Pared.cpp" />
+    <ClCompile Include="Pila.cpp" />
     <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

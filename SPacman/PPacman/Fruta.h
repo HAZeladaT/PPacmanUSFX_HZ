@@ -16,7 +16,6 @@ enum TIPO_FRUTA {
 	TIPO_FRUTA_MAXIMO
 };
 
-
 class Fruta : public GameObject
 {
 private:
@@ -29,36 +28,21 @@ private:
 	int contadorTiempoNoVisible;
 	int numeroFrutaVisible;
 public:
-	// Renderizador de la ventana
-	SDL_Renderer* renderer = nullptr;
-
-	// Array de las texturas de las diferentes frutas;
-	vector<SDL_Texture*> frutasTextures;
-
-
-public:
 	//Constructores y destructores
-	Fruta(SDL_Renderer* _renderer, vector<SDL_Texture*> _frutasTextures, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla);
-	//~Fruta();
-
+	Fruta(Texture* _frutasTextures, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla);
+	
 	//Metodos accesores
 
 	TIPO_FRUTA getTipoFruta() { return tipoFruta; }
-	int getTiempoVisible() { return tiempoVisible; }
-	int getTiempoNoVisible() { return tiempoNoVisible; }
-
 	void setTipoFruta(TIPO_FRUTA _tipoFruta) { tipoFruta = _tipoFruta; }
+
+	int getTiempoVisible() { return tiempoVisible; }
 	void setTiempoVisble(int _tiempoVisible) { tiempoVisible = _tiempoVisible; }
+
+	int getTiempoNoVisible() { return tiempoNoVisible; }
 	void setTiempoNoVisble(int _tiempoNoVisible) { tiempoNoVisible = _tiempoNoVisible; }
-
-	// Metodos varios
-
-	// Manejador de eventos de la fruta
-	//void handleEvent(SDL_Event& e);
 
 	// Mostrar u ocultar fruta
 	void mostrar();
-	// Renderizar imagen fruta
-	void render();
-
+	
 };

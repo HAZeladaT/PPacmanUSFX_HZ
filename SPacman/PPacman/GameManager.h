@@ -3,8 +3,8 @@
 #include <string>
 #include <stdlib.h>
 #include <time.h>
-
 #include <vector>
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -13,8 +13,8 @@
 #include "Fruta.h"
 #include "Moneda.h"
 #include "Texture.h"
+#include "MapGenerator.h"
 using namespace std;
-
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 800;
@@ -31,35 +31,16 @@ private:
     //The window renderer
     SDL_Renderer* gRenderer;
 
-    //The surface contained by the window
-    SDL_Surface* gScreenSurface;
-
-    //The images we will load and show on the screen
-    SDL_Texture* gPacmanTexture;
-    vector<SDL_Texture*> gFrutasTextures;
-    SDL_Texture* gMonedaTexture;
-    SDL_Texture* gSuperMonedaTexture;
-
-    Texture* pacmanTextura;
-    Texture* fantasma1Texture = nullptr;
-    Texture* fantasma2Texture = nullptr;
 public:
-    Pacman* pacman;
-    Fantasma* fantasmas;
-    Fantasma* fantasmas1;
-    Fruta* fruta;
-    vector<Moneda*> monedas;
-    vector<Moneda*> superMonedas;
     vector<GameObject*> actoresJuego;
+    MapGenerator* generadorNivelJuego;
 public:
     GameManager();
     int onExecute();
-
     bool onInit();
 
     void onEvent(SDL_Event* Event);
     void onLoop();
     void onRender();
     void onCleanup();
-    SDL_Texture* loadTexture(string path);
 };
