@@ -7,9 +7,9 @@ GameManager::GameManager() {
 	gRenderer = nullptr;
 	juego_en_ejecucion = true;
 }
-	
-int GameManager::onExecute() 
-{	
+
+int GameManager::onExecute()
+{
 	if (onInit() == false) {
 		return -1;
 	}

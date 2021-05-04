@@ -3,7 +3,7 @@
 
 using namespace std;
 
-Fantasma::Fantasma(Texture* _fantasmaTexture, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla, int _velocidadPatron) : GameObject(_fantasmaTexture,_posicionX, _posicionY, _ancho, _alto, _anchoPantalla, _altoPantalla)
+Fantasma::Fantasma(Texture* _fantasmaTexture, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla, int _velocidadPatron) : GameObject(_fantasmaTexture, _posicionX, _posicionY, _ancho, _alto, _anchoPantalla, _altoPantalla)
 {
 	// Inicializa propiedade de de pacman
 	velocidadX = 1;
@@ -31,7 +31,7 @@ void Fantasma::move()
 			}
 		}
 	}
-	else if(velocidadX== -1){
+	else if (velocidadX == -1) {
 		if (incrementoX <= posicionXDestino) {
 			velocidadX = 0;
 			if (incrementoY >= posicionYDestino) {
@@ -68,10 +68,10 @@ void Fantasma::move()
 			}
 		}
 	}
-	if ((incrementoX < 0)|| (incrementoX + getAncho())>=getAnchoPantalla()){
+	if ((incrementoX < 0) || (incrementoX + getAncho()) >= getAnchoPantalla()) {
 		velocidadX *= -1;
 	}
-	
+
 	if ((incrementoY < 0) || (incrementoY + getAlto()) >= getAltoPantalla()) {
 		velocidadY *= -1;
 	}

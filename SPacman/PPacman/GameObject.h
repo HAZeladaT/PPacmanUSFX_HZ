@@ -72,4 +72,3 @@ public:
 	virtual void mostrar() {};
 	virtual void handleEvent(SDL_Event& e) {};
 };
-

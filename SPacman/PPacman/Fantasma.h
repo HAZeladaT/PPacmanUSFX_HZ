@@ -20,11 +20,11 @@ private:
 	int posicionYDestino;
 	int incrementoX;
 	int incrementoY;
-	
+
 public:
 	//Constructores y destructores
 	Fantasma(Texture* _fantasmaTexture, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla, int _velocidadPatron);
-	
+
 	//Metodos accesores
 
 	int getVelocidadX() { return velocidadX; }
@@ -38,7 +38,7 @@ public:
 
 	int getIncrementoX() { return incrementoX; }
 	void setIncrementoX(int _incrementoX) { incrementoX = _incrementoX; }
-	
+
 	int getIncrementoY() { return incrementoY; }
 	void setIncrementoY(int _incrementoY) { incrementoY = _incrementoY; }
 	// Mover fantasma

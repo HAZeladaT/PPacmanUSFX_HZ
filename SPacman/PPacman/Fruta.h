@@ -30,7 +30,7 @@ private:
 public:
 	//Constructores y destructores
 	Fruta(Texture* _frutasTextures, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla);
-	
+
 	//Metodos accesores
 
 	TIPO_FRUTA getTipoFruta() { return tipoFruta; }
@@ -44,5 +44,5 @@ public:
 
 	// Mostrar u ocultar fruta
 	void mostrar();
-	
+
 };
