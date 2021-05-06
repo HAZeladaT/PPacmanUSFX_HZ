@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<vector>
+#include <list>
 #include<string>
 #include <fstream>
 
@@ -19,7 +20,7 @@ class MapGenerator
 {
 private:
 	vector<GameObject*> vectorObjetosJuego;
-
+	list<GameObject*> listaObjetosJuego;
 	const string pathPacman = "Resources/PacMan.bmp";
 	const string pathFantasma1 = "Resources/Blinky.bmp";
 	const string pathFantasma2 = "Resources/Clyde.bmp";
@@ -28,7 +29,7 @@ private:
 	const string pathFruta = "Resources/Frutas.png";
 	const string pathMoneda = "Resources/Monedas.png";
 	const string pathSuperMoneda = "Resources/Monedas03.jpg";
-	const string pathPared = "Resources/wall.bmp";
+	const string pathPared = "Resources/wall.png";
 
 	Texture* pacmanTexture;
 	Texture* fantasma1Texture;
@@ -49,5 +50,5 @@ public:
 	bool load(string path);
 
 	// carga los objetos generados por la clase MapGeneratos a un array de punteros a objetos GameObject*
-	void populate(vector<GameObject*>& _vectorObjetosJuegoGM);
+	void populate(list<GameObject*>& _vectorObjetosJuegoGM);
 };

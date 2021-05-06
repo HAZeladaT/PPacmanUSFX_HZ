@@ -23,17 +23,19 @@ int GameManager::onExecute()
 	while (juego_en_ejecucion) {
 		while (SDL_PollEvent(&Event)) {
 			onEvent(&Event);
-			for (int i = 0; i < actoresJuego.size(); i++) {
-				actoresJuego[i]->handleEvent(Event);
+			for (auto ilvo = actoresJuego.begin(); ilvo != actoresJuego.end();++ilvo) 
+			{
+				(*ilvo)->handleEvent(Event);
 			}
 		}
 
-		for (int i = 0; i < actoresJuego.size(); i++) {
-			actoresJuego[i]->move();
-			actoresJuego[i]->mostrar();
+		for (auto ilvo = actoresJuego.begin(); ilvo != actoresJuego.end(); ++ilvo)
+		{
+			(*ilvo)->move();
+			(*ilvo)->mostrar();
 		}
 		//Clear screen
-		SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0x00);
 		SDL_RenderClear(gRenderer);
 
 		//Update screen
@@ -94,9 +96,9 @@ void GameManager::onEvent(SDL_Event* Event) {
 };
 void GameManager::onLoop() {};
 void GameManager::onRender() {
-	for (int i = 0; i < actoresJuego.size(); i++) {
-		actoresJuego[i]->update();
-		actoresJuego[i]->render();
+	for (auto ilvo = actoresJuego.begin(); ilvo != actoresJuego.end();++ilvo) {
+		(*ilvo)->update();
+		(*ilvo)->render();
 	}
 };
 

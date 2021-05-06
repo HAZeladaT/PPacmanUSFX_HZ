@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
-
+#include <list>
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -32,7 +32,8 @@ private:
     SDL_Renderer* gRenderer;
 
 public:
-    vector<GameObject*> actoresJuego;
+    //vector<GameObject*> actoresJuego;
+    list<GameObject*> actoresJuego;
     MapGenerator* generadorNivelJuego;
 public:
     GameManager();

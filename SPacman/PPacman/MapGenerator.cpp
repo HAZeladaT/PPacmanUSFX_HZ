@@ -83,8 +83,10 @@ bool MapGenerator::load(string path)
 			}
 
 			// If the object was created, add it to the vector
-			if (newObject != nullptr)
+			if (newObject != nullptr) {
 				vectorObjetosJuego.push_back(newObject);
+				listaObjetosJuego.push_back(newObject);
+			}
 		}
 
 		y++;
@@ -96,9 +98,12 @@ bool MapGenerator::load(string path)
 	return true;
 }
 
-void MapGenerator::populate(std::vector<GameObject*>& _vectorObjetosJuegoGM)
+void MapGenerator::populate(std::list<GameObject*>& _vectorObjetosJuegoGM)
 {
-	for (unsigned int i = 0; i < vectorObjetosJuego.size(); i++) {
+	/*for (unsigned int i = 0; i < vectorObjetosJuego.size(); i++) {
 		_vectorObjetosJuegoGM.push_back(vectorObjetosJuego[i]);
+	}*/
+	for (auto ilvo = listaObjetosJuego.begin(); ilvo != listaObjetosJuego.end(); ++ilvo) {
+		_vectorObjetosJuegoGM.push_back(*ilvo);		
 	}
 }
