@@ -19,7 +19,7 @@ using namespace std;
 class MapGenerator
 {
 private:
-	vector<GameObject*> vectorObjetosJuego;
+	//vector<GameObject*> vectorObjetosJuego;
 	list<GameObject*> listaObjetosJuego;
 	const string pathPacman = "Resources/PacMan.bmp";
 	const string pathFantasma1 = "Resources/Blinky.bmp";

@@ -84,7 +84,7 @@ bool MapGenerator::load(string path)
 
 			// If the object was created, add it to the vector
 			if (newObject != nullptr) {
-				vectorObjetosJuego.push_back(newObject);
+				//vectorObjetosJuego.push_back(newObject);
 				listaObjetosJuego.push_back(newObject);
 			}
 		}
