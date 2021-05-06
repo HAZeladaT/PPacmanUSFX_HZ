@@ -2,8 +2,8 @@
 
 
 Tile::Tile() {
-	posicion.x = 0;
-	posicion.y = 0;
+	posicionX = 0;
+	posicionY = 0;
 
 	pacman = nullptr;
 	fantasma = nullptr;
@@ -13,8 +13,8 @@ Tile::Tile() {
 }
 
 Tile::Tile(int _x, int _y) {
-	posicion.x = _x;
-	posicion.y = _y;
+	posicionX = _x;
+	posicionY = _y;
 
 	pacman = nullptr;
 	fantasma = nullptr;
@@ -22,8 +22,8 @@ Tile::Tile(int _x, int _y) {
 	moneda = nullptr;
 	pared = nullptr;
 }
-
-void Tile::setPosicion(int _x, int _y) {
-	posicion.x = _x;
-	posicion.y = _y;
-}
+//
+//void Tile::setPosicion(int _x, int _y) {
+//	posicion.x = _x;
+//	posicion.y = _y;
+//}

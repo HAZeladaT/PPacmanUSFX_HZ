@@ -21,13 +21,12 @@ TileGraph::TileGraph(int _anchoTileGraph, int _altoTileGraph)
 	for (int y = 0; y < _altoTileGraph; y++) {
 		for (int x = 0; x < _anchoTileGraph; x++) {
 			int a = 0;
-			int b = 0;
 			for (auto i = listaTilesGraph.begin(); i != listaTilesGraph.end(); ++i) {
 				if (a == (x + (y * _anchoTileGraph))) {
-					listaTilesGraph(*i).setPosicionX(x);
-					(*i).setPosicionY(y);
-					listaTilesGraph.push_back(new Tile(x, y));
+					((Tile*)*i)->setPosicionX(x);
+					((Tile*)*i)->setPosicionY(y);
 				}
+				listaTilesGraph.push_back(new Tile(x, y));
 			}
 			/*tiles[x + (y * _anchoTileGraph)].setPosicionX(x);
 			tiles[x + (y * _anchoTileGraph)].setPosicionY(y);
@@ -55,9 +54,17 @@ void TileGraph::configurar(int _anchoTileGraph, int _altoTileGraph)
 	// NOTE: This could propably be also made with constructor
 	for (int y = 0; y < _altoTileGraph; y++) {
 		for (int x = 0; x < _anchoTileGraph; x++) {
-			(*i).setPosicionX(x);
+			int a = 0;
+			for (auto i = listaTilesGraph.begin(); i != listaTilesGraph.end(); ++i) {
+				if (a == (x + (y * _anchoTileGraph))) {
+					((Tile*)*i)->setPosicionX(x);
+					((Tile*)*i)->setPosicionY(y);
+				}
+				listaTilesGraph.push_back(new Tile(x, y));
+			}
+			/*(*i).setPosicionX(x);
 			(*i).setPosicionY(y);
-			listaTilesGraph.push_back(new Tile(x, y));
+			listaTilesGraph.push_back(new Tile(x, y));*/
 		}
 	}
 
@@ -88,12 +95,12 @@ Tile* TileGraph::getTileEn(int x, int y)
 	return NULL;
 }
 
-array<Tile*, 4> TileGraph::get4Vecinos(Tile* tile)
+array<Tile*, 4> TileGraph::get4Vecinos(Tile* _tile)
 {
 	std::array<Tile*, 4> Vecinos;
 
-	int x = tile->getPosicionX();
-	int y = tile->getPosicionY();
+	int x = _tile->getPosicionX();
+	int y = _tile->getPosicionY();
 
 	Vecinos[0] = getTileEn(x, y + 1);		// N
 	Vecinos[1] = getTileEn(x + 1, y);		// E
@@ -103,12 +110,12 @@ array<Tile*, 4> TileGraph::get4Vecinos(Tile* tile)
 	return Vecinos;
 }
 
-array<Tile*, 8> TileGraph::get8Vecinos(Tile* tile)
+array<Tile*, 8> TileGraph::get8Vecinos(Tile* _tile)
 {
 	std::array<Tile*, 8> Vecinos;
 
-	int x = tile->getPosicionX();
-	int y = tile->getPosicionY();
+	int x = _tile->getPosicionX();
+	int y = _tile->getPosicionY();
 
 	Vecinos[0] = getTileEn(x, y + 1);		// N
 	Vecinos[1] = getTileEn(x + 1, y);		// E

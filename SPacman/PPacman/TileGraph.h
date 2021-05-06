@@ -4,7 +4,6 @@
 #include <iostream>
 #include <array>
 #include "Tile.h"
-#include "GameObject.h"
 using namespace std;
 
 class TileGraph
@@ -18,7 +17,6 @@ private:
 	int altoTileGraph;
 
 	int getIndice(int _x, int _y);
-
 public:
 	TileGraph();
 	TileGraph(int _anchoTileGraph, int _altoTileGraph);
