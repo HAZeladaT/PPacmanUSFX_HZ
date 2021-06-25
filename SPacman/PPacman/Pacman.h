@@ -1,45 +1,34 @@
 #pragma once
 #include <iostream>
 #include <string>
-
+#include <algorithm>
 #include <SDL.h>
-#include "GameObject.h"
+#include "GamePawn.h"
 #include "Texture.h"
+#include "Tile.h"
+#include "TileGraph.h"
+#include "MoveDirection.h"
+#include "Moneda.h"
+#include "GamePawnControllerKey1.h"
 
 using namespace std;
 
-class Pacman: public GameObject
+class Pacman : public GamePawn
 {
-private:
-	// Velocidad en eje X y Y
-	int velocidadX;
-	int velocidadY;
-
-	// Velocidad a la que mueve el fantasma en cualquier eje
-	int velocidadPatron;
-
-	int posicionXEnTextura;
-	int posicionYEnTextura;
-
+protected:
+	GameObjectType returType() { return PACMAN; }
 public:
 	//Constructores y destructores
-	Pacman(Texture* _texturaPacman, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla, int _velocidadPatron);
+	Pacman(Tile* _tile, Texture* _textura);
+	~Pacman() {};
 
-	//Metodos accesores
+	void setTileActual(Tile* _tileNuevo) override;
 
-	int getVelocidadX() { return velocidadX; }
-	void setVelocidadX(int _velocidadX) { velocidadX = _velocidadX; }
-
-	int getVelocidadY() { return velocidadY; }
-	void setVelocidadY(int _velocidadY) { velocidadY = _velocidadY; }
-
-	int getVelocidadPatron() { return velocidadPatron; }
-	void setVelocidadPatron(int _velocidadPatron) { velocidadPatron = _velocidadPatron; }
-	
 	// Metodos varios
+	void update();
+	// Renderizar imagen pacman
+	void render() override;
+	//void update();
+	void deleteGameObject() override;
 
-	// Manejador de eventos de pacman
-	void handleEvent(SDL_Event& e);
-	// Mover pacman
-	void move();
 };

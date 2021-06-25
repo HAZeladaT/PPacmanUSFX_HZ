@@ -2,39 +2,57 @@
 
 using namespace std;
 
+GameManager* GameManager::instancia = nullptr;
+
+GameManager* GameManager::crearInstancia() {
+	if (instancia == nullptr) {
+		instancia = new GameManager();
+	}
+
+	return instancia;
+}
+
 GameManager::GameManager() {
 	gWindow = nullptr;
 	gRenderer = nullptr;
+
 	juego_en_ejecucion = true;
 }
 
-int GameManager::onExecute()
-{
+int GameManager::onExecute() {
 	if (onInit() == false) {
 		return -1;
 	}
-	srand(time(NULL));
-	generadorNivelJuego = new MapGenerator(SCREEN_WIDTH, SCREEN_HEIGHT);
+
+	srand(time(nullptr));
+
+	TileGraph tileGraphGM(20, 15, 800, 600);
+	textureManager = new TextureManager();
+	GameActor::tileGraph = &tileGraphGM;
+	generadorNivelJuego = new MapGenerator(&tileGraphGM, textureManager, SCREEN_WIDTH, SCREEN_HEIGHT);
 	generadorNivelJuego->load("Resources/mapa.txt");
 	generadorNivelJuego->populate(actoresJuego);
 
 	SDL_Event Event;
 
 	while (juego_en_ejecucion) {
-		while (SDL_PollEvent(&Event)) {
-			onEvent(&Event);
-			for (auto ilvo = actoresJuego.begin(); ilvo != actoresJuego.end();++ilvo) 
-			{
-				(*ilvo)->handleEvent(Event);
+
+		for (int i = 0; i < actoresJuego.size(); i++) {
+			if (actoresJuego[i]->getEliminar()) {
+				actoresJuego.erase(remove(actoresJuego.begin(), actoresJuego.end(), actoresJuego[i]), actoresJuego.end());
 			}
 		}
 
-		for (auto ilvo = actoresJuego.begin(); ilvo != actoresJuego.end(); ++ilvo)
-		{
-			(*ilvo)->move();
-			(*ilvo)->mostrar();
+		while (SDL_PollEvent(&Event)) {
+			onEvent(&Event);
+			for (int i = 0; i < actoresJuego.size(); i++) {
+				actoresJuego[i]->handleEvent(&Event);
+			}
 		}
-		//Clear screen
+
+		auto idob = actoresJuego[3]->getIdObjeto();
+
+		////Clear screen
 		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0x00);
 		SDL_RenderClear(gRenderer);
 
@@ -64,16 +82,17 @@ bool GameManager::onInit() {
 	{
 		//Create window
 		gWindow = SDL_CreateWindow("Pacman USFX", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-		if (gWindow == NULL)
+		if (gWindow == nullptr)
 		{
 			cout << "Window could not be created! SDL_Error: " << SDL_GetError() << endl;
 			success = false;
 		}
 		else
 		{
+
 			//Create vsynced renderer for window
 			gRenderer = SDL_CreateRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-			if (gRenderer == NULL)
+			if (gRenderer == nullptr)
 			{
 				cout << "Renderer could not be created! SDL Error: " << SDL_GetError() << endl;
 				success = false;
@@ -82,10 +101,16 @@ bool GameManager::onInit() {
 			{
 				//Initialize renderer color
 				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				if (TTF_Init() == -1) {
+					cout << "Error inicializacion SDL_ttf" << TTF_GetError() << endl;
+					success = false;
+				}
 			}
+
 			Texture::renderer = gRenderer;
 		}
 	}
+
 	return success;
 };
 
@@ -94,14 +119,17 @@ void GameManager::onEvent(SDL_Event* Event) {
 		juego_en_ejecucion = false;
 	}
 };
+
 void GameManager::onLoop() {};
+
 void GameManager::onRender() {
-	for (auto ilvo = actoresJuego.begin(); ilvo != actoresJuego.end();++ilvo) {
-		(*ilvo)->update();
-		(*ilvo)->render();
+	for (int i = 0; i < actoresJuego.size(); i++) {
+		actoresJuego[i]->update();
+		actoresJuego[i]->render();
 	}
 };
 
 void GameManager::onCleanup() {
+
 	SDL_Quit();
 };

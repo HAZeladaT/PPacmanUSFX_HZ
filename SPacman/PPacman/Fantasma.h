@@ -1,46 +1,48 @@
 #pragma once
-#include <SDL.h>
 #include <iostream>
 #include <string>
-#include "GameObject.h"
+#include <SDL.h>
+#include <algorithm>
+
+#include "GameActor.h"
 #include "Texture.h"
+#include "Tile.h"
+#include "TileGraph.h"
+#include "MoveDirection.h"
+
+#include "PathFinder.h"
+#include "Pacman.h"
+#include "GameObjectType.h"
 
 using namespace std;
-class Fantasma : public GameObject {
-private:
 
-	//Sentido
-	int velocidadX;
-	int velocidadY;
+enum GameFantasmaType {
+	FANTASMA_CLASICO,
+	FANTASMA_GALACTICO
+};
 
-	//Velocidad a la que mueve el fantasma en cualquier eje
-	int velocidadPatron;
 
-	int posicionXDestino;
-	int posicionYDestino;
-	int incrementoX;
-	int incrementoY;
+class Fantasma : public GameActor {
+protected:
+	GameFantasmaType tipoFantasma;
+
+	vector<Tile*> camino;
+	SDL_Point lastPacmanPos;
 
 public:
+
+	GameFantasmaType returnGameFantasmaType() { return tipoFantasma; }
+public:
 	//Constructores y destructores
-	Fantasma(Texture* _fantasmaTexture, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla, int _velocidadPatron);
+	Fantasma(Tile* _tile, Texture* _texture);
+	void setTileActual(Tile* _tileNuevo);
 
-	//Metodos accesores
+	// Actualizar datos fantasma
+	static bool avoidInPathFinder(Tile* _tile);
+	bool hasPositionChanged(SDL_Point firstPos, SDL_Point secondPoint);
 
-	int getVelocidadX() { return velocidadX; }
-	void setVelocidadX(int _velocidadX) { velocidadX = _velocidadX; }
-
-	int getVelocidadY() { return velocidadY; }
-	void setVelocidadY(int _velocidadY) { velocidadY = _velocidadY; }
-
-	int getVelocidadPatron() { return velocidadPatron; }
-	void setVelocidadPatron(int _velocidadPatron) { velocidadPatron = _velocidadPatron; }
-
-	int getIncrementoX() { return incrementoX; }
-	void setIncrementoX(int _incrementoX) { incrementoX = _incrementoX; }
-
-	int getIncrementoY() { return incrementoY; }
-	void setIncrementoY(int _incrementoY) { incrementoY = _incrementoY; }
-	// Mover fantasma
-	void move();
+	void update();
+	void render();
+	void deleteGameObject() override;
+	void handleEvent(SDL_Event* event) {};
 };

@@ -24,6 +24,7 @@ bool Texture::loadFromImage(std::string path, Uint8 r, Uint8 g, Uint8 b)
 		return false;
 
 	// Load image to a surface
+	//SDL_Surface* loadedSurface = SDL_LoadBMP(path.c_str());
 	SDL_Surface* loadedSurface = IMG_Load(path.c_str());
 	if (loadedSurface == nullptr) {
 		printf("Unable to load image %s! SDL Error: %s\n", path.c_str(), SDL_GetError());
@@ -56,12 +57,12 @@ bool Texture::loadFromRenderedText(TTF_Font* font, std::string text, SDL_Color t
 	free();
 
 	// Return if the renderer was not set
-	if (renderer == NULL)
+	if (renderer == nullptr)
 		return false;
 
 	// Render the text using SDL_ttf library
 	SDL_Surface* loadedSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
-	if (loadedSurface == NULL) {
+	if (loadedSurface == nullptr) {
 		printf("Unable to render text! SDL_ttf Error: %s\n", TTF_GetError());
 		return false;
 	}
@@ -83,7 +84,24 @@ bool Texture::loadFromRenderedText(TTF_Font* font, std::string text, SDL_Color t
 	return true;
 }
 
-void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip renderFlip)
+void Texture::render(int x, int y, SDL_Rect* clip, SDL_Rect* rect, double angle, SDL_Point* center, SDL_RendererFlip renderFlip)
+{
+	// Return if the renderer was not set
+	if (renderer == nullptr)
+		return;
+	if (rect == nullptr) {
+		SDL_Rect rect = { x, y, getAncho(), getAlto() };
+		if (clip != nullptr) {
+			rect.w = clip->w;
+			rect.h = clip->h;
+		}
+		SDL_RenderCopyEx(renderer, texture, clip, &rect, angle, center, renderFlip);
+	}
+	else
+		SDL_RenderCopyEx(renderer, texture, clip, rect, angle, center, renderFlip);
+}
+
+void Texture::Render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* center, SDL_RendererFlip renderFlip)
 {
 	// Return if the renderer was not set
 	if (renderer == nullptr)
@@ -91,13 +109,16 @@ void Texture::render(int x, int y, SDL_Rect* clip, double angle, SDL_Point* cent
 
 	SDL_Rect renderQuad = { x, y, getAncho(), getAlto() };
 
-	if (clip != NULL) {
+	if (clip != nullptr) {
 		renderQuad.w = clip->w;
 		renderQuad.h = clip->h;
 	}
 
 	SDL_RenderCopyEx(renderer, texture, clip, &renderQuad, angle, center, renderFlip);
 }
+
+
+
 
 void Texture::setColor(Uint8 red, Uint8 green, Uint8 blue)
 {
@@ -117,7 +138,7 @@ void Texture::setAlpha(Uint8 alpha)
 void Texture::free()
 {
 	if (texture != nullptr) {
-		// Free the texture and set its pointer to NULL
+		// Free the texture and set its pointer to nullptr
 		SDL_DestroyTexture(texture);
 		texture = nullptr;
 

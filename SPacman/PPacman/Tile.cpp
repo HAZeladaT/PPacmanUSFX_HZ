@@ -22,8 +22,3 @@ Tile::Tile(int _x, int _y) {
 	moneda = nullptr;
 	pared = nullptr;
 }
-//
-//void Tile::setPosicion(int _x, int _y) {
-//	posicion.x = _x;
-//	posicion.y = _y;
-//}

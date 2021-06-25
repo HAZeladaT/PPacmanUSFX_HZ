@@ -1,8 +1,16 @@
 #pragma once
-#include "GameObject.h"
+#include "GameActor.h"
+#include "TileGraph.h"
+
 class Pared :
-    public GameObject
+    public GameActor
 {
+protected:
+    GameObjectType returType() { return PARED; }
 public:
-    Pared(Texture* _paredTextura, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla);
+    Pared(Tile* _tile, Texture* _textura);
+    void setTileActual(Tile* _tileNuevo);
+
+    void handleEvent(SDL_Event* event) {};
+    void deleteGameObject();
 };

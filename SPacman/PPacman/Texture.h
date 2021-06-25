@@ -4,7 +4,6 @@
 #include <SDL.h>
 #include <SDL_ttf.h>
 #include <SDL_image.h>
-// #include <SDL_image.h>
 
 class Texture
 {
@@ -28,7 +27,8 @@ public:
 	bool loadFromRenderedText(TTF_Font* font, std::string text, SDL_Color textColor);
 
 	// Render the texture
-	void render(int x, int y, SDL_Rect* clip = NULL, double angle = 0.0, SDL_Point* center = NULL, SDL_RendererFlip renderFlip = SDL_FLIP_NONE);
+	void render(int x, int y, SDL_Rect* clip = nullptr, SDL_Rect* rect = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip renderFlip = SDL_FLIP_NONE);
+	void Render(int x, int y, SDL_Rect* clip = nullptr, double angle = 0.0, SDL_Point* center = nullptr, SDL_RendererFlip renderFlip = SDL_FLIP_NONE);
 
 	// Set color
 	void setColor(Uint8 red, Uint8 green, Uint8 blue);
@@ -44,5 +44,4 @@ public:
 
 	int getAncho() { return ancho; }
 	int getAlto() { return alto; }
-
 };

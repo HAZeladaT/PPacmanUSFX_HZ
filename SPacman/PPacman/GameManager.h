@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <vector>
-#include <list>
+
 #include <SDL.h>
 #include <SDL_image.h>
 
@@ -14,6 +14,10 @@
 #include "Moneda.h"
 #include "Texture.h"
 #include "MapGenerator.h"
+#include "TileGraph.h"
+#include "TextureManager.h"
+#include "GameActor.h"
+
 using namespace std;
 
 //Screen dimension constants
@@ -31,15 +35,19 @@ private:
     //The window renderer
     SDL_Renderer* gRenderer;
 
-public:
-    //vector<GameObject*> actoresJuego;
-    list<GameObject*> actoresJuego;
+    vector<GameObject*> actoresJuego;
+    list<GameObject*> lactoresJuego;
     MapGenerator* generadorNivelJuego;
-public:
+    TextureManager* textureManager;
+    //Factory* tipoFabrica;
+
     GameManager();
+    static GameManager* instancia;
+public:
+    static GameManager* crearInstancia();
+
     int onExecute();
     bool onInit();
-
     void onEvent(SDL_Event* Event);
     void onLoop();
     void onRender();

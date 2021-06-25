@@ -10,7 +10,6 @@ enum PODER_MONEDA {
     PODER_MONEDA_SALTO
 };
 
-
 class Moneda :
     public GameObject
 {
@@ -35,7 +34,5 @@ public:
     void setValor(int _valor) { valor = _valor; }
     void setTipoPoderMoneda(PODER_MONEDA _poderMoneda) { tipoPoderMoneda = _poderMoneda; }
     void setTiempoPoderMoneda(int _tiempoPoderMoneda) { tiempoPoderMoneda = _tiempoPoderMoneda; }
-
     void render();
-
 };

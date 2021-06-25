@@ -1,8 +1,10 @@
 #pragma once
 #include <SDL.h>
-#include "GameObject.h"
+#include "GameActor.h"
+#include "Texture.h"
+#include "TileGraph.h"
 
-enum PODER_MONEDA {
+enum PoderMoneda {
     PODER_MONEDA_NINGUNO,
     PODER_MONEDA_CRECIMIENTO,
     PODER_MONEDA_COMER,
@@ -11,24 +13,25 @@ enum PODER_MONEDA {
 };
 
 
-class Moneda :
-    public GameObject
-{
-private:
+class Moneda : public GameActor {
+protected:
     int valor;
-    PODER_MONEDA tipoPoderMoneda;
+    PoderMoneda tipoPoderMoneda;
     int tiempoPoderMoneda;
-
+    GameObjectType returType() { return MONEDA; }
 public:
-    Moneda(Texture* _monedaTextura, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla);
+    Moneda(Tile* _tile, Texture* _textura);
 
     int getValor() { return valor; }
-    void setValor(int _valor) { valor = _valor; }
-
-    PODER_MONEDA getTipoPoderMoneda() { return tipoPoderMoneda; }
-    void setTipoPoderMoneda(PODER_MONEDA _poderMoneda) { tipoPoderMoneda = _poderMoneda; }
-
+    PoderMoneda getTipoPoderMoneda() { return tipoPoderMoneda; }
     int getTiempoPoderMoneda() { return tiempoPoderMoneda; }
+
+    void setValor(int _valor) { valor = _valor; }
+    void setTipoPoderMoneda(PoderMoneda _poderMoneda) { tipoPoderMoneda = _poderMoneda; }
     void setTiempoPoderMoneda(int _tiempoPoderMoneda) { tiempoPoderMoneda = _tiempoPoderMoneda; }
+    void setTileActual(Tile* _tileNuevo);
+
+    void deleteGameObject() override;
+    void handleEvent(SDL_Event* event) {};
 
 };

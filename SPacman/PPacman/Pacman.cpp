@@ -1,80 +1,140 @@
 #include <stdio.h>
 #include "Pacman.h"
 
-Pacman::Pacman::Pacman(Texture* _texturaPacman, int _posicionX, int _posicionY, int _ancho, int _alto, int _anchoPantalla, int _altoPantalla, int _velocidadPatron) : GameObject(_texturaPacman,_posicionX, _posicionY, _ancho, _alto, _anchoPantalla, _altoPantalla)
+Pacman::Pacman(Tile* _tile, Texture* _textura) :GamePawn(_textura)
 {
-	// Inicializa propiedade de de pacman
-	velocidadX = 0;
-	velocidadY = 0;
-	velocidadPatron = _velocidadPatron;
-	posicionXEnTextura = 0;
-	posicionYEnTextura = 0;
+	tileActual = _tile;
+	tileSiguiente = nullptr;
+
+	if (tileActual != nullptr) {
+		tileActual->setPacman(this);
+
+		posicionX = tileActual->getPosicionX() * Tile::anchoTile;
+		posicionY = tileActual->getPosicionY() * Tile::altoTile;
+		ancho = Tile::anchoTile;
+		alto = Tile::altoTile;
+	}
+	else {
+		posicionX = 0;
+		posicionY = 0;
+	}
+
+	colisionador->w = ancho;
+	colisionador->h = alto;
+
+	velocidad = 5;
+	movil = true;
+	enMovimiento = false;
+	direccionActual = MOVE_STILL;
+	direccionSiguiente = MOVE_STILL;
+
+	gamePawnController = new GamePawnControllerKey1();
 }
 
-void Pacman::handleEvent(SDL_Event& e)
-{
-	// Si se ha precionado una tecla
-	if (e.type == SDL_KEYDOWN && e.key.repeat == 0)
-	{
-		// Se ajusta la velocidad
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_UP:
-			velocidadY -= velocidadPatron;
-			posicionXEnTextura = 50;
-			posicionYEnTextura = 25;
-			break;
-		case SDLK_DOWN:
-			velocidadY += velocidadPatron;
-			posicionXEnTextura = 50;
-			posicionYEnTextura = 0;
-			break;
-		case SDLK_LEFT:
-			velocidadX -= velocidadPatron;
-			posicionXEnTextura = 0;
-			posicionYEnTextura = 0;
-			break;
-		case SDLK_RIGHT:
-			velocidadX += velocidadPatron;
-			posicionXEnTextura = 0;
-			posicionYEnTextura = 25;
-			break;
-		}
+void Pacman::setTileActual(Tile* _tileNuevo) {
+
+
+	if (tileActual != nullptr) {
+		tileActual->setPacman(nullptr);
 	}
-	// Si se ha soltado una tecla
-	else if (e.type == SDL_KEYUP && e.key.repeat == 0)
-	{
-		// Se ajusta la velocidad
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_UP: velocidadY += velocidadPatron; break;
-		case SDLK_DOWN: velocidadY -= velocidadPatron; break;
-		case SDLK_LEFT: velocidadX += velocidadPatron; break;
-		case SDLK_RIGHT: velocidadX -= velocidadPatron; break;
-		}
+
+	tileActual = _tileNuevo;
+
+	if (tileActual != nullptr) {
+		tileActual->setPacman(this);
+
+		posicionX = tileActual->getPosicionX() * Tile::anchoTile;
+		posicionY = tileActual->getPosicionY() * Tile::altoTile;
 	}
-	//move();
+
 }
 
-void Pacman::move()
+void Pacman::update()
 {
-	// Mueve pacman a la izquierda o a la derecha
-	posicionX += velocidadX;
+	if (tileActual != nullptr && tileActual->getMoneda() != nullptr) {
+		SDL_Rect* eatingHole = new SDL_Rect({
+			posicionX /*+ Point::Margin*/,
+			posicionY /*+ Point::Margin*/,
+			ancho,
+			alto,
+			});
 
-	// Se verifica que no se sobrepasen los bordes horizontales de los margenes establecidos para la pantalla
-	if ((posicionX < 0) || (posicionX + ancho > anchoPantalla))
-	{
-		// mover atraz
-		posicionX -= velocidadX;
+		if (revisarColision(eatingHole, tileSiguiente->getMoneda()->getColisionador())) {
+			tileSiguiente->getMoneda()->deleteGameObject();
+		}
 	}
 
-	// Mover pacman arriba o abajo
-	posicionY += velocidadY;
+	// Animacion de pacman
+	if (enMovimiento) {
 
-	// Se verifica que no se sobrepasen los bordes verticales de los margenes establecidos para la pantalla
-	if ((posicionY < 0) || (posicionY + alto > altoPantalla))
-	{
-		// mover atra
-		posicionY -= velocidadY;
+		GamePawn::update();
 	}
+
+	// Cambiar de tile/direccion
+	if (tileSiguiente == tileActual || tileSiguiente == nullptr) {
+		if (direccionSiguiente != direccionActual && tratarDeMover(direccionSiguiente))
+			direccionActual = direccionSiguiente;
+		else
+			tratarDeMover(direccionActual);
+
+		if (tileSiguiente == nullptr)
+			enMovimiento = false;
+		else
+			enMovimiento = true;
+	}
+	else {
+		switch (direccionActual)
+		{
+		case MOVE_UP:
+			posicionY = std::max(posicionY - velocidad, tileSiguiente->getPosicionY() * Tile::altoTile);
+			break;
+		case MOVE_DOWN:
+			posicionY = std::min(posicionY + velocidad, tileSiguiente->getPosicionY() * Tile::altoTile);
+			break;
+		case MOVE_LEFT:
+			posicionX = std::max(posicionX - velocidad, tileSiguiente->getPosicionX() * Tile::anchoTile);
+			break;
+		case MOVE_RIGHT:
+			posicionX = std::min(posicionX + velocidad, tileSiguiente->getPosicionX() * Tile::anchoTile);
+			break;
+		}
+
+
+		colisionador->x = posicionX;
+		colisionador->y = posicionY;
+
+		if ((direccionActual == MOVE_DOWN || direccionActual == MOVE_UP) && posicionY == tileSiguiente->getPosicionY() * Tile::altoTile)
+			setTileActual(tileSiguiente);
+
+		if ((direccionActual == MOVE_LEFT || direccionActual == MOVE_RIGHT) && posicionX == tileSiguiente->getPosicionX() * Tile::anchoTile)
+			setTileActual(tileSiguiente);
+	}
+}
+
+void Pacman::render()
+{
+	SDL_Rect* cuadroAnimacion = new SDL_Rect();
+
+	switch (direccionActual) {
+	case MOVE_UP:
+		cuadroAnimacion = framesAnimacion->getCuadrosAnimacion("arriba")[numeroFrame];
+		break;
+	case MOVE_DOWN:
+		cuadroAnimacion = framesAnimacion->getCuadrosAnimacion("abajo")[numeroFrame];
+		break;
+	case MOVE_LEFT:
+		cuadroAnimacion = framesAnimacion->getCuadrosAnimacion("izquierda")[numeroFrame];
+		break;
+	case MOVE_RIGHT:
+		cuadroAnimacion = framesAnimacion->getCuadrosAnimacion("derecha")[numeroFrame];
+		break;
+	}
+
+	textura->render(getPosicionX(), getPosicionY(), cuadroAnimacion);
+}
+
+void Pacman::deleteGameObject()
+{
+	GameObject::deleteGameObject();
+	tileActual->setPacman(nullptr);
 }
