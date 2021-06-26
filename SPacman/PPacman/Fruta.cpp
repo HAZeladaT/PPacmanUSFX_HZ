@@ -10,6 +10,9 @@ Fruta::Fruta(Tile* _tile, Texture* _texture) : GameActor(_texture)
 		tileActual->setFruta(nullptr);
 		posicionX = tileActual->getPosicionX() * Tile::anchoTile;
 		posicionY = tileActual->getPosicionY() * Tile::altoTile;
+
+		ancho = Tile::anchoTile;
+		alto = Tile::altoTile;
 	}
 	else {
 		posicionX = 0;
