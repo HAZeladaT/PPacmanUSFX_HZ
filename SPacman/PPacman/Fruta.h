@@ -31,7 +31,6 @@ protected:
 public:
 
 	Fruta(Tile* _tile, Texture* _texture);
-	~Fruta();
 
 	//Metodos accesores
 
@@ -46,5 +45,7 @@ public:
 
 	// Metodos varios
 	// Mostrar u ocultar la fruta
-	void update() {};
+	void update();
+	void deleteGameObject();
+	void handleEvent(SDL_Event* event) {};
 };

@@ -63,7 +63,7 @@ public:
 	bool getVisible() { return visible; }
 	bool getMovil() { return movil; }
 	bool getEnMovimiento() { return enMovimiento; }
-	int getVelocidad() { return velocidad; }
+	float getVelocidad() { return velocidad; }
 	int getEnergia() { return energia; }
 	int getVidas() { return vidas; }
 	Texture* getTextura() { return textura; }
@@ -84,7 +84,7 @@ public:
 	void setVisible(bool _visible) { visible = _visible; }
 	void setMovil(bool _movil) { movil = _movil; }
 	void setEnMovimiento(bool _enMovimiento) { enMovimiento = _enMovimiento; }
-	void setVelocidad(int _velocidad) { velocidad = _velocidad; }
+	void setVelocidad(float _velocidad) { velocidad = _velocidad; }
 	void setEnergia(int _energia) { energia = _energia; }
 	void setVidas(int _vidas) { vidas = _vidas; }
 	void setTextura(Texture* _textura) { textura = _textura; }

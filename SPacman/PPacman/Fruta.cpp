@@ -6,7 +6,6 @@ using namespace std;
 Fruta::Fruta(Tile* _tile, Texture* _texture) : GameActor(_texture)
 {
 	tileActual = _tile;
-
 	if (tileActual != nullptr) {
 		tileActual->setFruta(nullptr);
 		posicionX = tileActual->getPosicionX() * Tile::anchoTile;
@@ -25,10 +24,35 @@ Fruta::Fruta(Tile* _tile, Texture* _texture) : GameActor(_texture)
 	tiempoInvisible = 150;
 	contadorTiempoVisible = 0;
 	contadorTiempoInvisible = 0;
-	int numeroFrutaVisible = 0;
+	numeroFrutaVisible = 0;
 }
 
-Fruta::~Fruta()
+void Fruta::update()
 {
-	free();
+	if (contadorTiempoVisible >= tiempoVisible) {
+		visible = false;
+		if (contadorTiempoInvisible >= tiempoInvisible) {
+			/*posicionX = 1 + rand() % tileGraph->anchoPantalla;
+			posicionY = 1 + rand() % tileGraph->altoPantalla;*/
+			contadorTiempoVisible = 0;
+			contadorTiempoInvisible = 0;
+			visible = true;
+			//numeroFrutaVisible = rand() % frutasTextures.size();
+			numeroFrutaVisible = rand() % 4;
+		}
+		else {
+			contadorTiempoInvisible++;
+			//contadorTiempoNoVisible = contadorTiempoNoVisible + 1;
+		}
+	}
+	else {
+		contadorTiempoVisible++;
+	}
+}
+void Fruta::deleteGameObject()
+{
+	// Calling the base function
+	GameObject::deleteGameObject();
+
+	tileActual->setFruta(nullptr);
 }

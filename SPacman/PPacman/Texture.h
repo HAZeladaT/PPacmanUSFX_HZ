@@ -10,10 +10,8 @@ class Texture
 private:
 	// Textura actual
 	SDL_Texture* texture;
-
 	int ancho;
 	int alto;
-
 public:
 	static SDL_Renderer* renderer;
 

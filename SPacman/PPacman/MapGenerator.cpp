@@ -70,16 +70,20 @@ bool MapGenerator::load(string path)
 				((GameActor*)objetoNuevo)->setVelocidad(2);
 				break;
 			case 'c':
-				/*objetoNuevo = new Fantasma(tileNuevo, textureManager->getTextura("fantasma_clasico3"));
+				objetoNuevo = new Fantasma(tileNuevo, textureManager->getTextura("fantasma_clasico3"));
 				((GameActor*)objetoNuevo)->setFramesAnimacion(textureManager->getFramesAnimacion("fantasma_clasico"));
 				((GameActor*)objetoNuevo)->setFramesDireccion(2);
-				((GameActor*)objetoNuevo)->setVelocidad(0);*/
+				((GameActor*)objetoNuevo)->setVelocidad(2.5);
 				break;
 			case 'd':
-				/*objetoNuevo = new Fantasma(tileNuevo, textureManager->getTextura("fantasma_clasico4"));
+				objetoNuevo = new Fantasma(tileNuevo, textureManager->getTextura("fantasma_clasico4"));
 				((GameActor*)objetoNuevo)->setFramesAnimacion(textureManager->getFramesAnimacion("fantasma_clasico"));
 				((GameActor*)objetoNuevo)->setFramesDireccion(2);
-				((GameActor*)objetoNuevo)->setVelocidad(1);*/
+				((GameActor*)objetoNuevo)->setVelocidad(1.5);
+				break;
+			case 'f':
+				objetoNuevo = new Fruta(tileNuevo, textureManager->getTextura("fruta_clasico"));
+				((GameActor*)objetoNuevo)->setFramesDireccion(4);
 				break;
 			}
 

@@ -12,12 +12,12 @@ private:
 
 	const string pathPacmanClasico = "Resources/PacMan.bmp";
 	const string pathMsPacmanClasico = "Resources/mispacman1.png";
-	const string pathFantasmaClasico1 = "Resources/Blinky.bmp";
+	const string pathFantasmaClasico1 = "Resources/Blinky.png";
 	const string pathFantasmaClasico2 = "Resources/Clyde.bmp";
 	const string pathFantasmaClasico3 = "Resources/Inkey.bmp";
 	const string pathFantasmaClasico4 = "Resources/Pinky.bmp";
 	const string pathFrutaClasico = "Resources/Frutas.png";
-	const string pathMonedaClasico = "Resources/Monedas02.jpg";
+	const string pathMonedaClasico = "Resources/Monedas02.png";
 	const string pathSuperMonedaClasico = "Resources/Monedas03.jpg";
 	const string pathParedClasico = "Resources/wall.bmp";
 	const string pathParedClasicoAdapter = "Resources/wall_sprite.bmp";
